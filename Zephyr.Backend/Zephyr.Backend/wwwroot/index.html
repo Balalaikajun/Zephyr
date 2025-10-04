@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Zephyr Weather</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="icon" type="image/png" href="assets/marshmallow.png">
+</head>
+<body>
+<div class="container">
+    <h2>Получить погоду</h2>
+
+    <label for="location">Адрес / город</label>
+    <input type="text" id="location" placeholder="Начните вводить..." autocomplete="off">
+    <ul id="suggestions"></ul>
+
+    <label for="provider">Сервис погоды</label>
+    <select id="provider">
+    </select>
+
+    <button id="getWeather">Получить погоду</button>
+
+    <div id="result"></div>
+</div>
+
+<script src="data/providers.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

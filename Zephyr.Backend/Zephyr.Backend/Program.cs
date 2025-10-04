@@ -61,6 +61,18 @@ builder.Services.AddSwaggerGen(options =>
         Version = "v0.1",
         Description = "API v0.1 для получения данных о погоде"
     });
+
+    options.OperationFilter<LowercaseQueryParameterOperationFilter>();
+});
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
 });
 
 var app = builder.Build();
@@ -83,6 +95,8 @@ app.UseMiddleware<HandleExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
+app.UseStaticFiles();
+app.MapFallbackToFile("index.html");
 app.MapControllers();
 
 app.Run();
