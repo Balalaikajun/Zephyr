@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Zephyr.Backend.Contracts.Requests.Shared.Suggestion;
@@ -7,7 +8,8 @@ using Zephyr.Backend.Services.Interfaces;
 namespace Zephyr.Backend.Controllers.Shared;
 
 [ApiController]
-[Route("[controller]")]
+[ApiVersion("0.1")]
+[Route("v{version:apiVersion}/[controller]")]
 public class SuggestionController(
     ISuggestionService suggestionService,
     IMapper mapper,

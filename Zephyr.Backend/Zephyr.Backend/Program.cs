@@ -1,5 +1,8 @@
+using System.Text.Json.Serialization;
+using Asp.Versioning;
+using Asp.Versioning.ApiExplorer;
 using Dadata;
-using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
 using Zephyr.Backend.Infrastructure;
 using Zephyr.Backend.Infrastructure.Conventions;
 using Zephyr.Backend.Infrastructure.Middlewares;
@@ -16,10 +19,6 @@ builder.Services.AddLogging();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
 builder.Services.Configure<Secrets>(builder.Configuration.GetSection("Secrets"));
 
-var serviceProvider = builder.Services.BuildServiceProvider();
-var settings = serviceProvider.GetRequiredService<IOptions<Settings>>().Value;
-var secrets = serviceProvider.GetRequiredService<IOptions<Secrets>>().Value;
-
 builder.Services.AddHttpClient<OpenWeatherClient>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<IWeatherClientFactory, WeatherClientFactory>();
@@ -27,18 +26,58 @@ builder.Services.AddScoped<OpenWeatherClient>();
 builder.Services.AddScoped<OpenMeteoClient>();
 builder.Services.AddScoped<YandexWeatherClient>();
 builder.Services.AddScoped<ISuggestionService, SuggestionService>();
-builder.Services.AddScoped<ISuggestClientAsync, SuggestClientAsync>(x => new SuggestClientAsync(secrets.DadataToken));
+builder.Services.AddScoped<ISuggestClientAsync, SuggestClientAsync>(x =>
+    new SuggestClientAsync(builder.Configuration.GetSection("Secrets")["DadataToken"]));
 
 builder.Services.AddAutoMapper(x => { }, typeof(MappingProfile));
 
-builder.Services.AddControllers(options => { options.Conventions.Add(new RoutePrefixConvention("api")); });
+builder.Services.AddRouting(options =>
+{
+    options.LowercaseUrls = true;
+    options.LowercaseQueryStrings = true;
+});
+
+builder.Services.AddControllers(options => { options.Conventions.Add(new RoutePrefixConvention("api")); })
+    .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
+
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddApiVersioning(options =>
+{
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(0, 1);
+    options.ReportApiVersions = true;
+}).AddApiExplorer(options =>
+{
+    options.GroupNameFormat = "'v'VVV";
+    options.SubstituteApiVersionInUrl = true;
+});
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v0.1", new OpenApiInfo
+    {
+        Title = "Zephyr API",
+        Version = "v0.1",
+        Description = "API v0.1 для получения данных о погоде"
+    });
+});
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+app.UseSwagger(c => { c.RouteTemplate = "swagger/{documentName}/swagger.json"; });
+
+app.UseSwaggerUI(options =>
+{
+    foreach (var description in provider.ApiVersionDescriptions)
+    {
+        options.SwaggerEndpoint(
+            $"/swagger/{description.GroupName}/swagger.json",
+            description.GroupName.ToUpperInvariant());
+    }
+});
 
 app.UseMiddleware<HandleExceptionMiddleware>();
 

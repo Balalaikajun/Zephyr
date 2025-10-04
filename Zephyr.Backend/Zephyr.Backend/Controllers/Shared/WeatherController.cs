@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Zephyr.Backend.Contracts.Requests.Shared.Weather;
@@ -7,11 +8,12 @@ using Zephyr.Backend.Services.Interfaces;
 namespace Zephyr.Backend.Controllers.Shared;
 
 [ApiController]
-[Route("[controller]")]
+[ApiVersion("0.1")]
+[Route("v{version:apiVersion}/[controller]")]
 public class WeatherController(IWeatherService weatherService, IMapper mapper, ILogger<WeatherController> logger)
     : BaseController(mapper, logger)
 {
-    [HttpGet]
+    [HttpGet("current")]
     public async Task<IActionResult> GetCurrentWeather([FromQuery] GetCurrentWeatherRequest request)
     {
         var serviceRequest =
