@@ -1,4 +1,4 @@
-using Zephyr.Backend.Infrastructure.Enums;
+using Zephyr.Backend.Utils.Interfaces;
 
 namespace Zephyr.Backend.Infrastructure;
 

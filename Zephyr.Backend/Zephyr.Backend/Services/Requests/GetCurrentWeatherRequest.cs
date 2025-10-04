@@ -1,7 +1,6 @@
-using Zephyr.Backend.Infrastructure;
-using Zephyr.Backend.Infrastructure.Enums;
+using Zephyr.Backend.Utils.Interfaces;
 
-namespace Zephyr.Backend.Contracts.Requests;
+namespace Zephyr.Backend.Services.Requests;
 
 public record GetCurrentWeatherRequest
 {

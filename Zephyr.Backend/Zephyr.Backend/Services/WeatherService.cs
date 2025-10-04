@@ -1,13 +1,17 @@
-using Zephyr.Backend.Contracts.Interfaces;
-using Zephyr.Backend.Contracts.Requests;
 using Zephyr.Backend.Models;
+using Zephyr.Backend.Services.Interfaces;
+using Zephyr.Backend.Services.Replies.Core;
+using Zephyr.Backend.Services.Requests;
+using Zephyr.Backend.Utils.Interfaces;
 
 namespace Zephyr.Backend.Services;
 
 public class WeatherService(IWeatherApiClient client) : IWeatherService
 {
-    public async Task<Weather> GetCurrentWeather(GetCurrentWeatherRequest request)
+    public async Task<Reply<Weather>> GetCurrentWeatherAsync(GetCurrentWeatherRequest request)
     {
-        return await client.GetWeather(request.Latitude, request.Longitude);
+        var result = await client.GetWeather(request.Latitude, request.Longitude);
+
+        return Reply<Weather>.Success(result);
     }
 }

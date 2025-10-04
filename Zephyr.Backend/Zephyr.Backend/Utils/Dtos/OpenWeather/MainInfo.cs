@@ -1,4 +1,4 @@
-namespace Zephyr.Backend.Contracts.Dtos.OpenWeather;
+namespace Zephyr.Backend.Utils.Dtos.OpenWeather;
 
 public record MainInfo
 {

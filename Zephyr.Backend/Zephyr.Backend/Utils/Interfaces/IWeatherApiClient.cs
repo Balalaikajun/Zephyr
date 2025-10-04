@@ -1,8 +1,6 @@
-using Zephyr.Backend.Infrastructure;
-using Zephyr.Backend.Infrastructure.Enums;
 using Zephyr.Backend.Models;
 
-namespace Zephyr.Backend.Contracts.Interfaces;
+namespace Zephyr.Backend.Utils.Interfaces;
 
 public interface IWeatherApiClient
 {

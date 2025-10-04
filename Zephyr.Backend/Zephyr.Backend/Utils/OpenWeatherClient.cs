@@ -1,14 +1,15 @@
+using AutoMapper;
 using Microsoft.Extensions.Options;
-using Zephyr.Backend.Contracts.Dtos.OpenWeather;
-using Zephyr.Backend.Contracts.Interfaces;
 using Zephyr.Backend.Infrastructure;
-using Zephyr.Backend.Infrastructure.Enums;
 using Zephyr.Backend.Models;
+using Zephyr.Backend.Utils.Dtos.OpenWeather;
+using Zephyr.Backend.Utils.Interfaces;
 
 namespace Zephyr.Backend.Utils;
 
 public class OpenWeatherClient(
     HttpClient httpClient,
+    IMapper mapper,
     IOptions<Settings> settings,
     IOptions<Secrets> secrets) : IWeatherApiClient
 {
@@ -18,19 +19,11 @@ public class OpenWeatherClient(
 
     public async Task<Weather> GetWeather(double latitude, double longitude)
     {
-        var url = $"{_baseUrl}/data/2.5/weather?lat={latitude}&lon={longitude}&appid={_apiKey}&units=imperial&lang=ru";
+        var url = $"{_baseUrl}/data/2.5/weather?lat={latitude}&lon={longitude}&appid={_apiKey}&units=metric&lang=ru";
 
         var apiData = await httpClient.GetFromJsonAsync<OpenWeatherResponse>(url);
 
-        var weatherData = new Weather
-        {
-            Pressure = apiData.Main.Pressure,
-            Temperature = apiData.Main.Temp,
-            Humidity = apiData.Main.Humidity
-        };
-
-        if (weatherData == null)
-            throw new NullReferenceException("Failed to deserialize weather data");
+        var weatherData = mapper.Map<Weather>(apiData);
 
         return weatherData;
     }

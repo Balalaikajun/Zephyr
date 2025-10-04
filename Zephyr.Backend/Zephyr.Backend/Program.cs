@@ -1,10 +1,12 @@
 using Dadata;
 using Microsoft.Extensions.Options;
-using Zephyr.Backend.Contracts.Interfaces;
 using Zephyr.Backend.Infrastructure;
 using Zephyr.Backend.Infrastructure.Conventions;
+using Zephyr.Backend.Infrastructure.Middlewares;
 using Zephyr.Backend.Services;
+using Zephyr.Backend.Services.Interfaces;
 using Zephyr.Backend.Utils;
+using Zephyr.Backend.Utils.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +34,8 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseMiddleware<HandleExceptionMiddleware>();
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

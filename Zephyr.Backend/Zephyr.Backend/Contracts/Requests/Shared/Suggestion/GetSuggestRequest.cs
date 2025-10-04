@@ -1,4 +1,4 @@
-namespace Zephyr.Backend.Contracts.Requests;
+namespace Zephyr.Backend.Contracts.Requests.Shared.Suggestion;
 
 public record GetSuggestRequest
 {

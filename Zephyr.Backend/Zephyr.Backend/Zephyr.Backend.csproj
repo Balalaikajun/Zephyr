@@ -24,9 +24,4 @@
             <DependentUpon>appsettings.json</DependentUpon>
         </Content>
     </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="Contracts\Replies\"/>
-    </ItemGroup>
-
 </Project>

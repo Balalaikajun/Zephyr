@@ -1,4 +1,4 @@
-namespace Zephyr.Backend.Infrastructure.Enums;
+namespace Zephyr.Backend.Utils.Interfaces;
 
 public enum WeatherProvider
 {
