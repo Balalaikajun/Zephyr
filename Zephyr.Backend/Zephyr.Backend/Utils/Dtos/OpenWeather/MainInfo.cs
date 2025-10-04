@@ -1,8 +1,12 @@
+using System.Text.Json.Serialization;
+
 namespace Zephyr.Backend.Utils.Dtos.OpenWeather;
 
 public record MainInfo
 {
-    public double Temp { get; init; }
-    public int Humidity { get; init; }
-    public int Pressure { get; init; }
+    [JsonPropertyName("temp")] public double Temperature { get; init; }
+
+    [JsonPropertyName("humidity")] public int Humidity { get; init; }
+
+    [JsonPropertyName("pressure")] public int Pressure { get; init; }
 }

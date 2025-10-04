@@ -36,27 +36,31 @@ public class HandleExceptionMiddleware(RequestDelegate next, ILogger<HandleExcep
         return context.Response.WriteAsJsonAsync(response);
     }
 
-    private static string MapMessage(Exception exception) =>
-        exception switch
+    private static string MapMessage(Exception exception)
+    {
+        return exception switch
         {
             ArgumentNullException => "Отсутствует обязательный параметр.",
             ArgumentException => "Переданы неверные данные.",
-            InvalidOperationException => "Некорректная операция.",
-            _ => "Неизвестная ошибка сервиса."
+            _ => "Неизвестная ошибка сервера."
         };
+    }
 
-    private static string? MapAction(Exception exception) =>
-        exception switch
+    private static string? MapAction(Exception exception)
+    {
+        return exception switch
         {
             ArgumentException => "Проверьте корректность введённых данных.",
             _ => null
         };
+    }
 
-    private static int MapStatusCode(Exception exception) =>
-        exception switch
+    private static int MapStatusCode(Exception exception)
+    {
+        return exception switch
         {
             ArgumentException or ArgumentNullException => StatusCodes.Status400BadRequest,
-            InvalidOperationException => StatusCodes.Status409Conflict,
             _ => StatusCodes.Status500InternalServerError
         };
+    }
 }

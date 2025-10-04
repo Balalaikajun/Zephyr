@@ -6,7 +6,9 @@ using Zephyr.Backend.Contracts.Requests.Shared.Weather;
 using Zephyr.Backend.Contracts.Responses.Core;
 using Zephyr.Backend.Models;
 using Zephyr.Backend.Services.Replies.Core;
+using Zephyr.Backend.Utils.Dtos.OpenMeteo;
 using Zephyr.Backend.Utils.Dtos.OpenWeather;
+using Zephyr.Backend.Utils.Dtos.YandexWeather;
 using Place = Zephyr.Backend.Contracts.Responses.Shared.Suggestion.Place;
 
 namespace Zephyr.Backend.Infrastructure;
@@ -74,8 +76,18 @@ public class MappingProfile : Profile
         {
             CreateMap<OpenWeatherResponse, Weather>()
                 .ForMember(d => d.Humidity, o => o.MapFrom(s => s.Main.Humidity))
-                .ForMember(d => d.Temperature, o => o.MapFrom(s => s.Main.Temp))
+                .ForMember(d => d.Temperature, o => o.MapFrom(s => s.Main.Temperature))
                 .ForMember(d => d.Pressure, o => o.MapFrom(s => s.Main.Pressure));
+
+            CreateMap<OpenMeteoResponse, Weather>()
+                .ForMember(d => d.Humidity, o => o.MapFrom(s => s.Current.Humidity))
+                .ForMember(d => d.Temperature, o => o.MapFrom(s => s.Current.Temperature))
+                .ForMember(d => d.Pressure, o => o.MapFrom(s => s.Current.Pressure));
+
+            CreateMap<YandexWeatherResponse, Weather>()
+                .ForMember(d => d.Humidity, o => o.MapFrom(s => s.Fact.Humidity))
+                .ForMember(d => d.Temperature, o => o.MapFrom(s => s.Fact.Temperature))
+                .ForMember(d => d.Pressure, o => o.MapFrom(s => s.Fact.Pressure));
         }
     }
 }

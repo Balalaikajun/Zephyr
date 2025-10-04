@@ -1,4 +1,4 @@
-using Zephyr.Backend.Utils.Interfaces;
+using Zephyr.Backend.Utils.Enums;
 
 namespace Zephyr.Backend.Contracts.Requests.Shared.Weather;
 

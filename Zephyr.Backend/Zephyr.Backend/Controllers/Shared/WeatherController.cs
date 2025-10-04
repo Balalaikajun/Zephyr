@@ -8,7 +8,8 @@ namespace Zephyr.Backend.Controllers.Shared;
 
 [ApiController]
 [Route("[controller]")]
-public class WeatherController(IWeatherService weatherService, IMapper mapper) : BaseController(mapper)
+public class WeatherController(IWeatherService weatherService, IMapper mapper, ILogger<WeatherController> logger)
+    : BaseController(mapper, logger)
 {
     [HttpGet]
     public async Task<IActionResult> GetCurrentWeather([FromQuery] GetCurrentWeatherRequest request)

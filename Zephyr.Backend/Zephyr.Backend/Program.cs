@@ -6,9 +6,12 @@ using Zephyr.Backend.Infrastructure.Middlewares;
 using Zephyr.Backend.Services;
 using Zephyr.Backend.Services.Interfaces;
 using Zephyr.Backend.Utils;
+using Zephyr.Backend.Utils.ApiClients;
 using Zephyr.Backend.Utils.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddLogging();
 
 builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
 builder.Services.Configure<Secrets>(builder.Configuration.GetSection("Secrets"));
@@ -18,10 +21,12 @@ var settings = serviceProvider.GetRequiredService<IOptions<Settings>>().Value;
 var secrets = serviceProvider.GetRequiredService<IOptions<Secrets>>().Value;
 
 builder.Services.AddHttpClient<OpenWeatherClient>();
-builder.Services.AddScoped<IWeatherApiClient, OpenWeatherClient>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
+builder.Services.AddScoped<IWeatherClientFactory, WeatherClientFactory>();
+builder.Services.AddScoped<OpenWeatherClient>();
+builder.Services.AddScoped<OpenMeteoClient>();
+builder.Services.AddScoped<YandexWeatherClient>();
 builder.Services.AddScoped<ISuggestionService, SuggestionService>();
-
 builder.Services.AddScoped<ISuggestClientAsync, SuggestClientAsync>(x => new SuggestClientAsync(secrets.DadataToken));
 
 builder.Services.AddAutoMapper(x => { }, typeof(MappingProfile));
