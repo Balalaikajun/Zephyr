@@ -1,0 +1,59 @@
+# ===============================
+# Rider / JetBrains
+# ===============================
+.idea/
+*.sln.iml
+*.iws
+out/
+
+# ===============================
+# Visual Studio / .NET
+# ===============================
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vs/
+
+# ===============================
+# ASP.NET / Web
+# ===============================
+wwwroot/lib/
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# ===============================
+# Logs
+# ===============================
+*.log
+logs/
+*.vsix
+*.nupkg
+
+# ===============================
+# OS Files
+# ===============================
+.DS_Store
+Thumbs.db
+
+# ===============================
+# Rider / C# caches
+# ===============================
+.idea/
+*.dotCover
+*.ReSharper.*
+*.resharper
+_ReSharper.Caches/
+
+# ===============================
+# Node / JS
+# ===============================
+dist/
+build/
+.env
+.env.local
+.env.*.local
+*.tsbuildinfo
