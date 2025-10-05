@@ -4,9 +4,12 @@ namespace Zephyr.Backend.Utils.Dtos.OpenWeather;
 
 public record MainInfo
 {
-    [JsonPropertyName("temp")] public double Temperature { get; init; }
+    [JsonPropertyName("temp")] 
+    public double Temperature { get; init; }
 
-    [JsonPropertyName("humidity")] public int Humidity { get; init; }
+    [JsonPropertyName("humidity")] 
+    public int Humidity { get; init; }
 
-    [JsonPropertyName("pressure")] public int Pressure { get; init; }
+    [JsonPropertyName("pressure")] 
+    public int Pressure { get; init; }
 }

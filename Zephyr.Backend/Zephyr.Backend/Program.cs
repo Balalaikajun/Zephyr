@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Zephyr.Backend.Infrastructure;
 using Zephyr.Backend.Infrastructure.Conventions;
 using Zephyr.Backend.Infrastructure.Extensions;
+using Zephyr.Backend.Infrastructure.Mapping;
 using Zephyr.Backend.Infrastructure.Middlewares;
 using Zephyr.Backend.Services;
 using Zephyr.Backend.Services.Interfaces;
@@ -30,7 +31,7 @@ builder.Services.AddScoped<ISuggestClientAsync, SuggestClientAsync>(x =>
 
 builder.Services.AddWeatherApiClients(typeof(IWeatherApiClient).Assembly);
 
-builder.Services.AddAutoMapper(x => { }, typeof(MappingProfile));
+builder.Services.AddAutoMapper(x => { }, typeof(CoreMapping));
 
 builder.Services.AddRouting(options =>
 {
