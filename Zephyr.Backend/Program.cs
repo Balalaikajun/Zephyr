@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 using Dadata;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using Zephyr.Backend.Infrastructure;
 using Zephyr.Backend.Infrastructure.Conventions;
@@ -20,11 +21,14 @@ builder.Services.AddLogging();
 builder.Services.Configure<Settings>(builder.Configuration.GetSection("Settings"));
 builder.Services.Configure<Secrets>(builder.Configuration.GetSection("Secrets"));
 
+builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<Settings>>().Value);
+builder.Services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<Secrets>>().Value);
+
 builder.Services.AddHttpClient<OpenWeatherClient>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
 builder.Services.AddScoped<ISuggestionService, SuggestionService>();
 builder.Services.AddScoped<ISuggestClientAsync, SuggestClientAsync>(x =>
-    new SuggestClientAsync(builder.Configuration.GetSection("Secrets")["DadataToken"]));
+    new SuggestClientAsync(x.GetRequiredService<Secrets>().DadataToken));
 
 builder.Services.AddWeatherApiClients(typeof(IWeatherApiClient).Assembly);
 
@@ -90,7 +94,6 @@ app.UseSwaggerUI(options =>
 
 app.UseMiddleware<HandleExceptionMiddleware>();
 
-app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseStaticFiles();
 app.MapFallbackToFile("index.html");

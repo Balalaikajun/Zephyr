@@ -5,7 +5,7 @@ using Zephyr.Backend.Services.Replies.Core;
 
 namespace Zephyr.Backend.Controllers.Core;
 
-public abstract class BaseController(IMapper mapper, ILogger<BaseController> logger) : ControllerBase
+public abstract class BaseController(IMapper mapper) : ControllerBase
 {
     protected TServiceRequest MapToServiceRequest<TServiceRequest, THttpRequest>(THttpRequest request)
     {

@@ -22,14 +22,14 @@ public class YandexWeatherClient : IWeatherApiClient
     public YandexWeatherClient(HttpClient httpClient,
         IMapper mapper,
         ILogger<OpenMeteoClient> logger,
-        IOptions<Settings> settings,
-        IOptions<Secrets> secrets)
+        Settings settings,
+        Secrets secrets)
     {
         _httpClient = httpClient;
         _mapper = mapper;
         _logger = logger;
-        _apiKey = secrets.Value.WeatherApiKeys[WeatherProvider];
-        _baseUrl = settings.Value.WeatherApiBaseUrls[WeatherProvider];
+        _apiKey = secrets.WeatherApiKeys[WeatherProvider];
+        _baseUrl = settings.WeatherApiBaseUrls[WeatherProvider];
     }
 
     public WeatherProvider WeatherProvider => WeatherProvider.YandexWeather;

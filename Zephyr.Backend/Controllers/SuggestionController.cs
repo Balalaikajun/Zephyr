@@ -13,8 +13,7 @@ namespace Zephyr.Backend.Controllers;
 [Route("v{version:apiVersion}/[controller]")]
 public class SuggestionController(
     ISuggestionService suggestionService,
-    IMapper mapper,
-    ILogger<SuggestionController> logger) : BaseController(mapper, logger)
+    IMapper mapper) : BaseController(mapper)
 {
     [HttpGet]
     public async Task<IActionResult> GetSuggests([FromQuery] GetSuggestRequest request)

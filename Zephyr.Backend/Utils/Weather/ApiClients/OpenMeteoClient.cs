@@ -21,12 +21,12 @@ public class OpenMeteoClient : IWeatherApiClient
     public OpenMeteoClient(HttpClient httpClient,
         IMapper mapper,
         ILogger<OpenMeteoClient> logger,
-        IOptions<Settings> settings)
+        Settings settings)
     {
         _httpClient = httpClient;
         _mapper = mapper;
         _logger = logger;
-        _baseUrl = settings.Value.WeatherApiBaseUrls[WeatherProvider];
+        _baseUrl = settings.WeatherApiBaseUrls[WeatherProvider];
     }
 
     public WeatherProvider WeatherProvider => WeatherProvider.OpenMeteo;

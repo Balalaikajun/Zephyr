@@ -22,14 +22,14 @@ public class OpenWeatherClient : IWeatherApiClient
     public OpenWeatherClient(HttpClient httpClient,
         IMapper mapper,
         ILogger<OpenWeatherClient> logger,
-        IOptions<Settings> settings,
-        IOptions<Secrets> secrets)
+        Settings settings,
+        Secrets secrets)
     {
         _httpClient = httpClient;
         _mapper = mapper;
         _logger = logger;
-        _apiKey = secrets.Value.WeatherApiKeys[WeatherProvider];
-        _baseUrl = settings.Value.WeatherApiBaseUrls[WeatherProvider];
+        _apiKey = secrets.WeatherApiKeys[WeatherProvider];
+        _baseUrl = settings.WeatherApiBaseUrls[WeatherProvider];
     }
 
     public WeatherProvider WeatherProvider => WeatherProvider.OpenWeather;
