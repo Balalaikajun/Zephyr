@@ -8,8 +8,10 @@ using Zephyr.Backend.Services.Requests.Suggestion;
 
 namespace Zephyr.Backend.Services;
 
+/// <inheritdoc/>
 public class SuggestionService(ISuggestClientAsync suggestionsApiClient, IMapper mapper) : ISuggestionService
 {
+    /// <inheritdoc/>
     public async Task<Reply<List<Place>>> GetPlaceSuggestsAsync(GetSuggestRequest request)
     {
         var response = await suggestionsApiClient.SuggestAddress(

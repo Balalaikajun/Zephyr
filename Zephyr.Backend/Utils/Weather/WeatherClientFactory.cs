@@ -3,8 +3,10 @@ using Zephyr.Backend.Utils.Weather.Interfaces;
 
 namespace Zephyr.Backend.Utils.Weather;
 
+/// <inheritdoc/>
 public class WeatherClientFactory(IEnumerable<IWeatherApiClient> weatherApiClients) : IWeatherClientFactory
 {
+    /// <inheritdoc/>
     public IWeatherApiClient Create(WeatherProvider provider)
     {
         var client = weatherApiClients.FirstOrDefault(x => x.WeatherProvider == provider);

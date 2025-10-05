@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
@@ -58,6 +59,11 @@ builder.Services.AddApiVersioning(options =>
 
 builder.Services.AddSwaggerGen(options =>
 {
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+    options.IncludeXmlComments(xmlPath);
+
     options.SwaggerDoc("v0.1", new OpenApiInfo
     {
         Title = "Zephyr API",
@@ -98,5 +104,26 @@ app.UseAuthorization();
 app.UseStaticFiles();
 app.MapFallbackToFile("index.html");
 app.MapControllers();
+
+if (builder.Environment.IsDevelopment())
+{
+    app.Lifetime.ApplicationStarted.Register(() =>
+    {
+        Console.WriteLine();
+        Console.WriteLine("==========================================");
+        Console.WriteLine(" Application started successfully!");
+
+        Console.WriteLine($" UI : http://localhost:{app.Urls.FirstOrDefault()?.Split(':').Last()}");
+
+        foreach (var description in provider.ApiVersionDescriptions)
+        {
+            Console.WriteLine($" Swagger UI for version {description.GroupName.ToUpper()} : " +
+                              $"http://localhost:{app.Urls.FirstOrDefault()?.Split(':').Last()}/swagger");
+        }
+
+        Console.WriteLine("==========================================");
+        Console.WriteLine();
+    });
+}
 
 app.Run();

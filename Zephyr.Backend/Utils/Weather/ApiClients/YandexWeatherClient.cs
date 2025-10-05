@@ -11,6 +11,9 @@ using Zephyr.Backend.Utils.Weather.Interfaces;
 
 namespace Zephyr.Backend.Utils.Weather.ApiClients;
 
+/// <summary>
+/// Клиент для работы с API <see href="https://yandex.ru/dev/weather/">Яндекс.Погода</see>.
+/// </summary>
 public class YandexWeatherClient : IWeatherApiClient
 {
     private readonly string _apiKey;
@@ -32,9 +35,11 @@ public class YandexWeatherClient : IWeatherApiClient
         _baseUrl = settings.WeatherApiBaseUrls[WeatherProvider];
     }
 
+    /// <inheritdoc/>
     public WeatherProvider WeatherProvider => WeatherProvider.YandexWeather;
 
-    public async Task<Reply<Models.Weather>> GetWeather(double latitude, double longitude)
+    /// <inheritdoc/>
+    public async Task<Reply<Models.Weather>> GetCurrentWeather(double latitude, double longitude)
     {
         var url = QueryHelpers.AddQueryString($"{_baseUrl}/v2/forecast", new Dictionary<string, string?>
         {

@@ -11,6 +11,9 @@ using Zephyr.Backend.Utils.Weather.Interfaces;
 
 namespace Zephyr.Backend.Utils.Weather.ApiClients;
 
+/// <summary>
+/// Клиент для работы с API <see href="https://open-meteo.com/">OpenMeteo</see>.
+/// </summary>
 public class OpenMeteoClient : IWeatherApiClient
 {
     private readonly string _baseUrl;
@@ -29,9 +32,11 @@ public class OpenMeteoClient : IWeatherApiClient
         _baseUrl = settings.WeatherApiBaseUrls[WeatherProvider];
     }
 
+    /// <inheritdoc/>
     public WeatherProvider WeatherProvider => WeatherProvider.OpenMeteo;
 
-    public async Task<Reply<Models.Weather>> GetWeather(double latitude, double longitude)
+    /// <inheritdoc/>
+    public async Task<Reply<Models.Weather>> GetCurrentWeather(double latitude, double longitude)
     {
         var url = QueryHelpers.AddQueryString($"{_baseUrl}/v1/forecast", new Dictionary<string, string?>
         {

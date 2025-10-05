@@ -3,6 +3,9 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Zephyr.Backend.Infrastructure.Conventions;
 
+/// <summary>
+/// Фильтр операций для приведения параметров запросов Swagger в CamelCase
+/// </summary>
 public class LowercaseQueryParameterOperationFilter : IOperationFilter
 {
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
