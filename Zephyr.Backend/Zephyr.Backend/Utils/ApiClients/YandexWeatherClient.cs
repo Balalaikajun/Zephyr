@@ -12,16 +12,28 @@ using Zephyr.Backend.Utils.Interfaces;
 
 namespace Zephyr.Backend.Utils.ApiClients;
 
-public class YandexWeatherClient(
-    HttpClient httpClient,
-    IMapper mapper,
-    ILogger<OpenMeteoClient> logger,
-    IOptions<Settings> settings,
-    IOptions<Secrets> secrets) : IWeatherApiClient
+public class YandexWeatherClient : IWeatherApiClient
 {
-    private readonly string _apiKey = secrets.Value.WeatherApiKeys[WeatherProvider];
-    private readonly string _baseUrl = settings.Value.WeatherApiBaseUrls[WeatherProvider];
-    public static WeatherProvider WeatherProvider => WeatherProvider.YandexWeather;
+    private readonly string _apiKey;
+    private readonly string _baseUrl;
+    private readonly HttpClient _httpClient;
+    private readonly IMapper _mapper;
+    private readonly ILogger<OpenMeteoClient> _logger;
+
+    public YandexWeatherClient(HttpClient httpClient,
+        IMapper mapper,
+        ILogger<OpenMeteoClient> logger,
+        IOptions<Settings> settings,
+        IOptions<Secrets> secrets)
+    {
+        _httpClient = httpClient;
+        _mapper = mapper;
+        _logger = logger;
+        _apiKey = secrets.Value.WeatherApiKeys[WeatherProvider];
+        _baseUrl = settings.Value.WeatherApiBaseUrls[WeatherProvider];
+    }
+
+    public WeatherProvider WeatherProvider => WeatherProvider.YandexWeather;
 
     public async Task<Reply<Weather>> GetWeather(double latitude, double longitude)
     {
@@ -38,6 +50,6 @@ public class YandexWeatherClient(
 
         request.Headers.Add("X-Yandex-Weather-Key", _apiKey);
 
-        return await httpClient.GetAndMapAsync<YandexWeatherResponse, Weather>(request, mapper, logger);
+        return await _httpClient.GetAndMapAsync<YandexWeatherResponse, Weather>(request, _mapper, _logger);
     }
 }

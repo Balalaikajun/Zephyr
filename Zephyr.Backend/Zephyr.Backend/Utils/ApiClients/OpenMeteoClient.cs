@@ -12,14 +12,25 @@ using Zephyr.Backend.Utils.Interfaces;
 
 namespace Zephyr.Backend.Utils.ApiClients;
 
-public class OpenMeteoClient(
-    HttpClient httpClient,
-    IMapper mapper,
-    ILogger<OpenMeteoClient> logger,
-    IOptions<Settings> settings) : IWeatherApiClient
+public class OpenMeteoClient : IWeatherApiClient
 {
-    private readonly string _baseUrl = settings.Value.WeatherApiBaseUrls[WeatherProvider];
-    public static WeatherProvider WeatherProvider => WeatherProvider.OpenMeteo;
+    private readonly string _baseUrl;
+    private readonly HttpClient _httpClient;
+    private readonly IMapper _mapper;
+    private readonly ILogger<OpenMeteoClient> _logger;
+
+    public OpenMeteoClient(HttpClient httpClient,
+        IMapper mapper,
+        ILogger<OpenMeteoClient> logger,
+        IOptions<Settings> settings)
+    {
+        _httpClient = httpClient;
+        _mapper = mapper;
+        _logger = logger;
+        _baseUrl = settings.Value.WeatherApiBaseUrls[WeatherProvider];
+    }
+
+    public WeatherProvider WeatherProvider => WeatherProvider.OpenMeteo;
 
     public async Task<Reply<Weather>> GetWeather(double latitude, double longitude)
     {
@@ -32,6 +43,6 @@ public class OpenMeteoClient(
 
         var request = new HttpRequestMessage(HttpMethod.Get, url);
 
-        return await httpClient.GetAndMapAsync<OpenMeteoResponse, Weather>(request, mapper, logger);
+        return await _httpClient.GetAndMapAsync<OpenMeteoResponse, Weather>(request, _mapper, _logger);
     }
 }

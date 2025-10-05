@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Text.Json.Serialization;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
@@ -5,11 +6,13 @@ using Dadata;
 using Microsoft.OpenApi.Models;
 using Zephyr.Backend.Infrastructure;
 using Zephyr.Backend.Infrastructure.Conventions;
+using Zephyr.Backend.Infrastructure.Extensions;
 using Zephyr.Backend.Infrastructure.Middlewares;
 using Zephyr.Backend.Services;
 using Zephyr.Backend.Services.Interfaces;
 using Zephyr.Backend.Utils;
 using Zephyr.Backend.Utils.ApiClients;
+using Zephyr.Backend.Utils.Enums;
 using Zephyr.Backend.Utils.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,13 +24,11 @@ builder.Services.Configure<Secrets>(builder.Configuration.GetSection("Secrets"))
 
 builder.Services.AddHttpClient<OpenWeatherClient>();
 builder.Services.AddScoped<IWeatherService, WeatherService>();
-builder.Services.AddScoped<IWeatherClientFactory, WeatherClientFactory>();
-builder.Services.AddScoped<OpenWeatherClient>();
-builder.Services.AddScoped<OpenMeteoClient>();
-builder.Services.AddScoped<YandexWeatherClient>();
 builder.Services.AddScoped<ISuggestionService, SuggestionService>();
 builder.Services.AddScoped<ISuggestClientAsync, SuggestClientAsync>(x =>
     new SuggestClientAsync(builder.Configuration.GetSection("Secrets")["DadataToken"]));
+
+builder.Services.AddWeatherApiClients(typeof(IWeatherApiClient).Assembly);
 
 builder.Services.AddAutoMapper(x => { }, typeof(MappingProfile));
 

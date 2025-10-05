@@ -6,6 +6,6 @@ namespace Zephyr.Backend.Utils.Interfaces;
 
 public interface IWeatherApiClient
 {
-    static WeatherProvider WeatherProvider { get; }
+    WeatherProvider WeatherProvider { get; }
     Task<Reply<Weather>> GetWeather(double latitude, double longitude);
 }
