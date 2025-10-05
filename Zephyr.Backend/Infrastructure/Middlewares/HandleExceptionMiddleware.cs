@@ -60,6 +60,7 @@ public class HandleExceptionMiddleware(RequestDelegate next, ILogger<HandleExcep
         {
             ArgumentNullException => "Отсутствует обязательный параметр.",
             ArgumentException => "Переданы неверные данные.",
+            TaskCanceledException => "Превышено время ожидания ответа сервиса.",
             _ => "Неизвестная ошибка сервера."
         };
     }
@@ -74,6 +75,7 @@ public class HandleExceptionMiddleware(RequestDelegate next, ILogger<HandleExcep
         return exception switch
         {
             ArgumentException => "Проверьте корректность введённых данных.",
+            TaskCanceledException => "Попробуйте снова",
             _ => null
         };
     }

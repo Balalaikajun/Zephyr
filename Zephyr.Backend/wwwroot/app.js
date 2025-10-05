@@ -152,7 +152,7 @@ function displayWeather(response) {
             ">
                  ${response.message}
         `;
-        if (response.action) html += `<div style="margin-top:5px;">Что сделать: ${response.action}</div>`;
+        if (response.action) html += `<div style="margin-top:5px;">${response.action}</div>`;
         html += `</div>`;
         resultDiv.innerHTML = html;
         return;

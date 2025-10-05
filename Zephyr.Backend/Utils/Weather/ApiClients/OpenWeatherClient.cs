@@ -17,7 +17,6 @@ namespace Zephyr.Backend.Utils.Weather.ApiClients;
 public class OpenWeatherClient : IWeatherApiClient
 {
     private readonly string _apiKey;
-    private readonly string _baseUrl;
     private readonly HttpClient _httpClient;
     private readonly ILogger<OpenWeatherClient> _logger;
     private readonly IMapper _mapper;
@@ -25,23 +24,21 @@ public class OpenWeatherClient : IWeatherApiClient
     public OpenWeatherClient(HttpClient httpClient,
         IMapper mapper,
         ILogger<OpenWeatherClient> logger,
-        Settings settings,
         Secrets secrets)
     {
         _httpClient = httpClient;
         _mapper = mapper;
         _logger = logger;
         _apiKey = secrets.WeatherApiKeys[WeatherProvider];
-        _baseUrl = settings.WeatherApiBaseUrls[WeatherProvider];
     }
-    
+
     /// <inheritdoc/>
     public WeatherProvider WeatherProvider => WeatherProvider.OpenWeather;
 
     /// <inheritdoc/>
     public async Task<Reply<Models.Weather>> GetCurrentWeather(double latitude, double longitude)
     {
-        var url = QueryHelpers.AddQueryString($"{_baseUrl}/data/2.5/weather", new Dictionary<string, string?>
+        var url = QueryHelpers.AddQueryString($"/data/2.5/weather", new Dictionary<string, string?>
         {
             ["lat"] = latitude.ToString(CultureInfo.InvariantCulture),
             ["lon"] = longitude.ToString(CultureInfo.InvariantCulture),
