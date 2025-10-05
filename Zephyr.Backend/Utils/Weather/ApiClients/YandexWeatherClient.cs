@@ -10,7 +10,7 @@ using Zephyr.Backend.Utils.Weather.Interfaces;
 namespace Zephyr.Backend.Utils.Weather.ApiClients;
 
 /// <summary>
-/// Клиент для работы с API <see href="https://yandex.ru/dev/weather/">Яндекс.Погода</see>.
+///     Клиент для работы с API <see href="https://yandex.ru/dev/weather/">Яндекс.Погода</see>.
 /// </summary>
 public class YandexWeatherClient(
     HttpClient httpClient,
@@ -18,13 +18,13 @@ public class YandexWeatherClient(
     ILogger<OpenMeteoClient> logger)
     : IWeatherApiClient
 {
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public WeatherProvider WeatherProvider => WeatherProvider.YandexWeather;
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<Reply<Models.Weather>> GetCurrentWeather(double latitude, double longitude)
     {
-        var url = QueryHelpers.AddQueryString($"/v2/forecast", new Dictionary<string, string?>
+        var url = QueryHelpers.AddQueryString("/v2/forecast", new Dictionary<string, string?>
         {
             ["lat"] = latitude.ToString(CultureInfo.InvariantCulture),
             ["lon"] = longitude.ToString(CultureInfo.InvariantCulture),
@@ -34,7 +34,7 @@ public class YandexWeatherClient(
         });
 
         var request = new HttpRequestMessage(HttpMethod.Get, url);
-        
+
         return await httpClient.GetAndMapAsync<YandexWeatherResponse, Models.Weather>(request, mapper, logger);
     }
 }

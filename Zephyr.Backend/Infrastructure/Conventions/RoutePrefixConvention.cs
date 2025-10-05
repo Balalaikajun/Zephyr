@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc.ApplicationModels;
 namespace Zephyr.Backend.Infrastructure.Conventions;
 
 /// <summary>
-/// Конвенция для добавления префиксов всем маршрутам Api
+///     Конвенция для добавления префиксов всем маршрутам Api
 /// </summary>
 public class RoutePrefixConvention : IApplicationModelConvention
 {
     private readonly AttributeRouteModel _prefix;
-    
+
     public RoutePrefixConvention(string prefix)
     {
         _prefix = new AttributeRouteModel(new RouteAttribute(prefix));

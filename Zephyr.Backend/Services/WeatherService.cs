@@ -6,10 +6,10 @@ using Zephyr.Backend.Utils.Weather.Interfaces;
 
 namespace Zephyr.Backend.Services;
 
-/// <inheritdoc/>
+/// <inheritdoc />
 public class WeatherService(IWeatherClientFactory weatherClientFactory) : IWeatherService
 {
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<Reply<Weather>> GetCurrentWeatherAsync(GetCurrentWeatherRequest request)
     {
         var client = weatherClientFactory.Create(request.WeatherProvider);

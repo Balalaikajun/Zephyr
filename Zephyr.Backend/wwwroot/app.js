@@ -55,8 +55,8 @@ async function fetchSuggestions(query) {
     const signal = currentController.signal;
 
     try {
-        const params = new URLSearchParams({ query, count: 5 });
-        const response = await fetch(`${AppConfig.ApiHost}${AppConfig.ApiBasePath}/suggestion?${params}`, { signal });
+        const params = new URLSearchParams({query, count: 5});
+        const response = await fetch(`${AppConfig.ApiHost}${AppConfig.ApiBasePath}/suggestion?${params}`, {signal});
         if (!response.ok) throw new Error(`Ошибка ${response.status}`);
 
         const suggestions = await response.json();
@@ -108,14 +108,14 @@ function updateActiveSuggestion(items) {
 
 function selectSuggestion(item) {
     locationInput.value = item.textContent;
-    selectedCoordinates = { latitude: item.dataset.lat, longitude: item.dataset.lon };
+    selectedCoordinates = {latitude: item.dataset.lat, longitude: item.dataset.lon};
     hideSuggestions();
     getWeather(selectedCoordinates.latitude, selectedCoordinates.longitude, providerSelect.value).then(displayWeather);
 }
 
 async function getWeather(lat, lon, provider) {
     try {
-        const params = new URLSearchParams({ latitude: lat, longitude: lon });
+        const params = new URLSearchParams({latitude: lat, longitude: lon});
         if (provider) params.append('weatherProvider', provider);
 
         const url = `${AppConfig.ApiHost}${AppConfig.ApiBasePath}/weather/current?${params}`;
@@ -132,10 +132,10 @@ async function getWeather(lat, lon, provider) {
             };
         }
 
-        return { error: false, data };
+        return {error: false, data};
     } catch (err) {
         console.error(err);
-        return { error: true, code: 0, message: err.message ?? 'Ошибка при запросе к серверу', action: null };
+        return {error: true, code: 0, message: err.message ?? 'Ошибка при запросе к серверу', action: null};
     }
 }
 

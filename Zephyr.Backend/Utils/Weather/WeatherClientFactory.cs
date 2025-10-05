@@ -4,7 +4,7 @@ using Zephyr.Backend.Utils.Weather.Interfaces;
 
 namespace Zephyr.Backend.Utils.Weather;
 
-/// <inheritdoc/>
+/// <inheritdoc />
 public class WeatherClientFactory(IServiceProvider sp) : IWeatherClientFactory
 {
     private readonly Dictionary<WeatherProvider, Type> _map = new()
@@ -14,7 +14,7 @@ public class WeatherClientFactory(IServiceProvider sp) : IWeatherClientFactory
         { WeatherProvider.YandexWeather, typeof(YandexWeatherClient) }
     };
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public IWeatherApiClient Create(WeatherProvider provider)
     {
         if (!_map.TryGetValue(provider, out var type))

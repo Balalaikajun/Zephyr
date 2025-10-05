@@ -3,13 +3,13 @@ using Zephyr.Backend.Contracts.Responses.Core;
 namespace Zephyr.Backend.Infrastructure.Middlewares;
 
 /// <summary>
-/// Middleware для централизованной обработки исключений в приложении.
-/// Перехватывает необработанные исключения, логирует их и формирует стандартный JSON-ответ с кодом ошибки.
+///     Middleware для централизованной обработки исключений в приложении.
+///     Перехватывает необработанные исключения, логирует их и формирует стандартный JSON-ответ с кодом ошибки.
 /// </summary>
 public class HandleExceptionMiddleware(RequestDelegate next, ILogger<HandleExceptionMiddleware> logger)
 {
     /// <summary>
-    /// Основной метод middleware. Перехватывает исключения при обработке запроса.
+    ///     Основной метод middleware. Перехватывает исключения при обработке запроса.
     /// </summary>
     /// <param name="context">Контекст текущего HTTP-запроса.</param>
     public async Task InvokeAsync(HttpContext context)
@@ -26,7 +26,7 @@ public class HandleExceptionMiddleware(RequestDelegate next, ILogger<HandleExcep
     }
 
     /// <summary>
-    /// Формирует и отправляет JSON-ответ с информацией об ошибке.
+    ///     Формирует и отправляет JSON-ответ с информацией об ошибке.
     /// </summary>
     /// <param name="context">Контекст запроса.</param>
     /// <param name="exception">Исключение, которое произошло.</param>
@@ -50,7 +50,7 @@ public class HandleExceptionMiddleware(RequestDelegate next, ILogger<HandleExcep
     }
 
     /// <summary>
-    /// Возвращает текстовое сообщение для клиента в зависимости от типа исключения.
+    ///     Возвращает текстовое сообщение для клиента в зависимости от типа исключения.
     /// </summary>
     /// <param name="exception">Исключение.</param>
     /// <returns>Краткое описание ошибки.</returns>
@@ -66,7 +66,7 @@ public class HandleExceptionMiddleware(RequestDelegate next, ILogger<HandleExcep
     }
 
     /// <summary>
-    /// Предлагает действие для пользователя в зависимости от типа исключения.
+    ///     Предлагает действие для пользователя в зависимости от типа исключения.
     /// </summary>
     /// <param name="exception">Исключение.</param>
     /// <returns>Рекомендация по исправлению ошибки или null.</returns>
@@ -81,7 +81,7 @@ public class HandleExceptionMiddleware(RequestDelegate next, ILogger<HandleExcep
     }
 
     /// <summary>
-    /// Определяет HTTP-статус код, соответствующий типу исключения.
+    ///     Определяет HTTP-статус код, соответствующий типу исключения.
     /// </summary>
     /// <param name="exception">Исключение.</param>
     /// <returns>HTTP-статус код для ответа клиенту.</returns>

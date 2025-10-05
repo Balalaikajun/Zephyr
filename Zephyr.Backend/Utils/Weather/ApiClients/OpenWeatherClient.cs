@@ -1,7 +1,6 @@
 using System.Globalization;
 using AutoMapper;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Options;
 using Zephyr.Backend.Infrastructure;
 using Zephyr.Backend.Infrastructure.Extensions;
 using Zephyr.Backend.Services.Replies.Core;
@@ -12,7 +11,7 @@ using Zephyr.Backend.Utils.Weather.Interfaces;
 namespace Zephyr.Backend.Utils.Weather.ApiClients;
 
 /// <summary>
-/// Клиент для работы с API <see href="https://openweathermap.org/">OpenWeather</see>.
+///     Клиент для работы с API <see href="https://openweathermap.org/">OpenWeather</see>.
 /// </summary>
 public class OpenWeatherClient : IWeatherApiClient
 {
@@ -32,13 +31,13 @@ public class OpenWeatherClient : IWeatherApiClient
         _apiKey = secrets.WeatherApiKeys[WeatherProvider];
     }
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public WeatherProvider WeatherProvider => WeatherProvider.OpenWeather;
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<Reply<Models.Weather>> GetCurrentWeather(double latitude, double longitude)
     {
-        var url = QueryHelpers.AddQueryString($"/data/2.5/weather", new Dictionary<string, string?>
+        var url = QueryHelpers.AddQueryString("/data/2.5/weather", new Dictionary<string, string?>
         {
             ["lat"] = latitude.ToString(CultureInfo.InvariantCulture),
             ["lon"] = longitude.ToString(CultureInfo.InvariantCulture),

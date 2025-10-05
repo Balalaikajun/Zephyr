@@ -1,22 +1,22 @@
 namespace Zephyr.Backend.Models;
 
 /// <summary>
-/// Данные о погоде
+///     Данные о погоде
 /// </summary>
 public record Weather
 {
     /// <summary>
-    /// Температура
+    ///     Температура
     /// </summary>
     public required double Temperature { get; init; }
 
     /// <summary>
-    /// Влажность
+    ///     Влажность
     /// </summary>
     public required int Humidity { get; init; }
 
     /// <summary>
-    /// Давление
+    ///     Давление
     /// </summary>
     public required int Pressure { get; init; }
 }

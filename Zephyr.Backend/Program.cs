@@ -12,7 +12,6 @@ using Zephyr.Backend.Infrastructure.Middlewares;
 using Zephyr.Backend.Services;
 using Zephyr.Backend.Services.Interfaces;
 using Zephyr.Backend.Utils.Weather.ApiClients;
-using Zephyr.Backend.Utils.Weather.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -108,7 +107,6 @@ app.MapFallbackToFile("index.html");
 app.MapControllers();
 
 if (builder.Environment.IsDevelopment())
-{
     app.Lifetime.ApplicationStarted.Register(() =>
     {
         Console.WriteLine();
@@ -118,14 +116,11 @@ if (builder.Environment.IsDevelopment())
         Console.WriteLine($" UI : http://localhost:{app.Urls.FirstOrDefault()?.Split(':').Last()}");
 
         foreach (var description in provider.ApiVersionDescriptions)
-        {
             Console.WriteLine($" Swagger UI for version {description.GroupName.ToUpper()} : " +
                               $"http://localhost:{app.Urls.FirstOrDefault()?.Split(':').Last()}/swagger");
-        }
 
         Console.WriteLine("==========================================");
         Console.WriteLine();
     });
-}
 
 app.Run();

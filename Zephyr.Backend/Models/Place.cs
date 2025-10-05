@@ -1,22 +1,22 @@
 namespace Zephyr.Backend.Models;
 
 /// <summary>
-/// Место
+///     Место
 /// </summary>
 public record Place
 {
     /// <summary>
-    /// Название
+    ///     Название
     /// </summary>
     public required string Name { get; init; }
 
     /// <summary>
-    /// Широта
+    ///     Широта
     /// </summary>
     public required double Latitude { get; init; }
 
     /// <summary>
-    /// Долгота
+    ///     Долгота
     /// </summary>
     public required double Longitude { get; init; }
 }

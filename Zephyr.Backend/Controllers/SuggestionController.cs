@@ -10,7 +10,7 @@ using Zephyr.Backend.Services.Interfaces;
 namespace Zephyr.Backend.Controllers;
 
 /// <summary>
-/// Контроллер подсказок ввода.
+///     Контроллер подсказок ввода.
 /// </summary>
 [ApiController]
 [ApiVersion("0.1")]
@@ -20,7 +20,7 @@ public class SuggestionController(
     IMapper mapper) : BaseController(mapper)
 {
     /// <summary>
-    /// Получить список подсказок для ввода места.
+    ///     Получить список подсказок для ввода места.
     /// </summary>
     /// <param name="request">Параметры запроса: текст для поиска и количество подсказок.</param>
     /// <returns>Список подсказок.</returns>

@@ -4,12 +4,12 @@ using Zephyr.Backend.Services.Replies.Core;
 namespace Zephyr.Backend.Infrastructure.Extensions;
 
 /// <summary>
-/// Расширения для <see cref="HttpClient"/>
+///     Расширения для <see cref="HttpClient" />
 /// </summary>
 public static class HttpClientExtensions
 {
     /// <summary>
-    /// Выполняет HTTP GET-запрос и преобразует результат в указанный тип.
+    ///     Выполняет HTTP GET-запрос и преобразует результат в указанный тип.
     /// </summary>
     /// <typeparam name="TApiResponse">Тип объекта, который возвращает внешний API.</typeparam>
     /// <typeparam name="TDest">Тип объекта, в который нужно преобразовать ответ.</typeparam>

@@ -3,25 +3,25 @@ using System.Text.Json.Serialization;
 namespace Zephyr.Backend.Utils.Weather.Dtos.OpenWeather;
 
 /// <summary>
-/// Основные метеопараметры из OpenWeather.
+///     Основные метеопараметры из OpenWeather.
 /// </summary>
 public record MainInfo
 {
     /// <summary>
-    /// Температура воздуха (°C, если в настройках API указан units=metric).
+    ///     Температура воздуха (°C, если в настройках API указан units=metric).
     /// </summary>
-    [JsonPropertyName("temp")] 
+    [JsonPropertyName("temp")]
     public double Temperature { get; init; }
 
     /// <summary>
-    /// Влажность воздуха (%).
+    ///     Влажность воздуха (%).
     /// </summary>
-    [JsonPropertyName("humidity")] 
+    [JsonPropertyName("humidity")]
     public int Humidity { get; init; }
 
     /// <summary>
-    /// Атмосферное давление (мм. рт. ст.).
+    ///     Атмосферное давление (мм. рт. ст.).
     /// </summary>
-    [JsonPropertyName("pressure")] 
+    [JsonPropertyName("pressure")]
     public int Pressure { get; init; }
 }

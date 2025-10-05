@@ -1,7 +1,6 @@
 using System.Globalization;
 using AutoMapper;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Options;
 using Zephyr.Backend.Infrastructure.Extensions;
 using Zephyr.Backend.Services.Replies.Core;
 using Zephyr.Backend.Utils.Weather.Dtos.OpenMeteo;
@@ -11,7 +10,7 @@ using Zephyr.Backend.Utils.Weather.Interfaces;
 namespace Zephyr.Backend.Utils.Weather.ApiClients;
 
 /// <summary>
-/// Клиент для работы с API <see href="https://open-meteo.com/">OpenMeteo</see>.
+///     Клиент для работы с API <see href="https://open-meteo.com/">OpenMeteo</see>.
 /// </summary>
 public class OpenMeteoClient(
     HttpClient httpClient,
@@ -19,13 +18,13 @@ public class OpenMeteoClient(
     ILogger<OpenMeteoClient> logger)
     : IWeatherApiClient
 {
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public WeatherProvider WeatherProvider => WeatherProvider.OpenMeteo;
 
-    /// <inheritdoc/>
+    /// <inheritdoc />
     public async Task<Reply<Models.Weather>> GetCurrentWeather(double latitude, double longitude)
     {
-        var url = QueryHelpers.AddQueryString($"/v1/forecast", new Dictionary<string, string?>
+        var url = QueryHelpers.AddQueryString("/v1/forecast", new Dictionary<string, string?>
         {
             ["latitude"] = latitude.ToString(CultureInfo.InvariantCulture),
             ["longitude"] = longitude.ToString(CultureInfo.InvariantCulture),
